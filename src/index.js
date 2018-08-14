@@ -1,4 +1,3 @@
-
 import { CREDENTIALS } from '../credentials';
 import mapboxgl from 'mapbox-gl';
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
@@ -24,6 +23,21 @@ map.on('load', function() {
   const la = map.getStyle().layers;
   const layers = la.filter(l => l.type === 'symbol' && l.layout['text-field']);
   const layerId = layers[0].id;
+
+  map.addSource('dem', {
+    type: 'raster-dem',
+    url: 'mapbox://mapbox.terrain-rgb',
+  });
+
+  map.addLayer(
+    {
+      id: 'hillshading',
+      source: 'dem',
+      type: 'hillshade',
+    },
+    'waterway-river-canal-shadow'
+  );
+
   map.addLayer(
     {
       id: '3d-buildings',
