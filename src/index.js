@@ -5,7 +5,6 @@ mapboxgl.accessToken = CREDENTIALS.mapboxgl;
 
 const map = new mapboxgl.Map({
   container: 'map',
-  // style: 'mapbox://styles/mapbox/satellite-streets-v9',
   style: 'mapbox://styles/mapbox/outdoors-v9',
   center: [-104.9903, 39.7392],
   zoom: 9,
@@ -78,3 +77,12 @@ map.on('zoom', () => {
     ? map.easeTo({ pitch: 40, bearing: -17 })
     : map.easeTo({ pitch: 0, bearing: 0 });
 });
+
+map.on('moveend', () => {
+  const layerNames = map
+    .getStyle()
+    .layers.filter(layer => layer['source-layer'] === 'road')
+    .map(layer => layer.id);
+
+  const roads = map.queryRenderedFeatures({ layers: layerNames });
+})
