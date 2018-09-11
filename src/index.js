@@ -15,14 +15,16 @@ const map = new mapboxgl.Map({
   hash: true,
 });
 
-map.on('load', () => {
+const loadMap = () => {
   controls();
   hillRgb();
   extrusions();
   update();
-  map.on('moveend', () => {
-    update();
-  });
+};
+
+map.on('load', () => {
+  loadMap();
+  map.on('moveend', () => update());
   map.on('zoom', () => ease());
 });
 
@@ -208,6 +210,6 @@ const analyzeLine = (bins, ruler, line, isTwoWay) => {
 
     bins[k0] += distance;
     if (isTwoWay) bins[k1] += distance;
-    console.log(bins)
+    console.log(bins);
   }
 };
