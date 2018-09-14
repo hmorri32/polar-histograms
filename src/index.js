@@ -210,6 +210,5 @@ const analyzeLine = (bins, ruler, line, isTwoWay) => {
 
     bins[k0] += distance;
     if (isTwoWay) bins[k1] += distance;
-    console.log(bins);
   }
 };
